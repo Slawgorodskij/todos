@@ -6,8 +6,8 @@ export const TodoDetail = () => {
     const {key} = useParams();
     const todos = useSelector(todoSelector);
     
-    const deed = todos.find((obj)=>obj.key=== +key);
-   
+    const deed = todos.find((obj)=>obj.key === key);
+
     if(!deed){
         return <Navigate to="/error" />;
     }

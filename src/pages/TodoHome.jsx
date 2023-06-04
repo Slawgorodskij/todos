@@ -48,7 +48,7 @@ export const TodoHome = () => {
                     key={item.key}
                     className="box columns is-mobile">
                     <div className="column is-for-fifths">
-                        <Link to={`/${item.newKey}`}>
+                        <Link to={`/${item.key}`}>
                             {item.done && <del>{item.title}</del>}
                             {!item.done && item.title}
                         </Link>

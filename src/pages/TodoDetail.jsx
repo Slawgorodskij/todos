@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
-import { todoSelector } from "../store/todoSelector";
+import { todoSelector } from "../store/todo/todoSelector";
 
-export const TodoDetaill = () => {
+export const TodoDetail = () => {
     const {key} = useParams();
     const todos = useSelector(todoSelector);
     

@@ -1,14 +1,17 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { addTodoAction } from "../../store/todoAction";
-import { TodoAdd } from "./TodoAdd";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {addTodoAction} from "../../store/todo/todoAction";
+import {TodoAdd} from "./TodoAdd";
+import {add} from "../../services/api";
 
 
-export const TodoAddContainer = () =>{
+export const TodoAddContainer = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate('');
-   
+    const navigate = useNavigate();
+
+    const user = useSelector(state => state.user.currentUser);
+
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
     const [image, setImage] = useState('');
@@ -23,16 +26,16 @@ export const TodoAddContainer = () =>{
 
     const handleImageChange = (event) => {
         const cFiles = event.target.files;
-        if(cFiles.length>0){
+        if (cFiles.length > 0) {
             const fileReader = new FileReader();
-            fileReader.onload = () =>{
+            fileReader.onload = () => {
                 setImage(fileReader.result);
             }
             fileReader.readAsDataURL(cFiles[0]);
-        } 
+        }
     }
 
-    const handleFormSubmit = (event) =>{
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
         const date = new Date();
         const newDeed = {
@@ -41,22 +44,21 @@ export const TodoAddContainer = () =>{
             image: image,
             done: false,
             createdAt: date.toLocaleDateString(),
-            key: date.getTime(),
         }
+        const addedDeed = await add(user, newDeed);
+        dispatch(addTodoAction(addedDeed));
 
-        dispatch(addTodoAction(newDeed));
-        
         setTimeout(() => {
             navigate('/')
         }, 300);
     }
 
     return (
-           <TodoAdd 
-                handleFormSubmit={handleFormSubmit}
-                handleTitleChange={handleTitleChange}
-                handleDescChange={handleDescChange}
-                handleImageChange={handleImageChange}
-           />
+        <TodoAdd
+            handleFormSubmit={handleFormSubmit}
+            handleTitleChange={handleTitleChange}
+            handleDescChange={handleDescChange}
+            handleImageChange={handleImageChange}
+        />
     );
 }

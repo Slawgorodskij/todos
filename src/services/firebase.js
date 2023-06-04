@@ -1,10 +1,15 @@
-import { initializeApp } from "firebase/app";
-import {
-    createUserWithEmailAndPassword,
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut,
-} from 'firebase/auth';
+// import { initializeApp } from "firebase/app";
+// import {
+//     createUserWithEmailAndPassword,
+//     getAuth,
+//     signInWithEmailAndPassword,
+//     signOut,
+// } from 'firebase/auth';
+
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
+import 'firebase/compat/auth';
+
 const firebaseConfig = {
     apiKey: "AIzaSyB_u3YKmry7bjGqZD10u41nK9EHkzjdGWQ",
     authDomain: "todos-1a555.firebaseapp.com",
@@ -15,11 +20,16 @@ const firebaseConfig = {
     databaseURL: "https://todos-1a555-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const firebaseAuth = getAuth(firebaseApp);
+export const firebaseDb = firebase.initializeApp(firebaseConfig);
+export const auth = firebase.auth();
+export const db = firebaseDb.database().ref();
 
-export const signUp = async (email, password) => await createUserWithEmailAndPassword(firebaseAuth, email, password);
 
-export const logIn = async (email, password) =>await signInWithEmailAndPassword(firebaseAuth, email, password);
+// const firebaseApp = initializeApp(firebaseConfig);
+// const firebaseAuth = getAuth(firebaseApp);
 
-export const logOut = async () => await signOut(firebaseAuth);
+// export const signUp = async (email, password) => await createUserWithEmailAndPassword(firebaseAuth, email, password);
+//
+// export const logIn = async (email, password) =>await signInWithEmailAndPassword(firebaseAuth, email, password);
+//
+// export const logOut = async () => await signOut(firebaseAuth);

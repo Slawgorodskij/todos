@@ -44,6 +44,7 @@ export const TodoAddContainer = () => {
             image: image,
             done: false,
             createdAt: date.toLocaleDateString(),
+            newKey: date.getTime()
         }
         const addedDeed = await add(user, newDeed);
         dispatch(addTodoAction(addedDeed));
